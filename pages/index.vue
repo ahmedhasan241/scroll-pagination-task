@@ -29,8 +29,20 @@
         >
           {{ post.title }}
         </h2>
-        <p class="text-gray-700 line-clamp-3">{{ post.description }}</p>
-        <p class="text-sm text-gray-500 mt-3">🗓 {{ formatDate(post.created_at) }}</p>
+        <p class="text-sm text-gray-500 inline-flex items-center">
+          <Icon name="pixel:calender-solid" class="w-4 h-4 mr-1 text-blue-500" />
+          {{ formatDate(post.created_at) }}
+        </p>
+        <div class="relative group">
+          <p class="text-gray-700 line-clamp-3">
+            {{ post.description }}
+          </p>
+          <div
+            class="absolute z-10 w-64 p-2 text-sm text-white bg-gray-900 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none left-0 bottom-full mb-2"
+          >
+            {{ post.description }}
+          </div>
+        </div>
       </div>
 
       <template v-if="isLoading">

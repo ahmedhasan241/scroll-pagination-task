@@ -21,7 +21,7 @@
       </div>
 
       <p class="text-sm text-gray-500 mt-6 inline-flex items-center">
-        <Icon name="heroicons:calendar-days-20-solid" class="w-4 h-4 mr-1 text-blue-500" />
+        <Icon name="pixel:calender-solid" class="w-4 h-4 mr-1 text-blue-500" />
         Posted on {{ formatDate(post.created_at) }}
       </p>
     </div>
