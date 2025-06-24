@@ -2,18 +2,27 @@
   <div class="max-w-3xl mx-auto p-6 bg-gradient-to-br from-white via-blue-50 to-blue-100 rounded-xl shadow-lg">
     <button
       @click="router.back()"
-      class="mb-6 inline-flex items-center text-sm font-medium text-blue-700 hover:underline hover:text-blue-900 transition"
+      v-if="post" 
+      class="cursor-pointer mb-6 inline-flex items-center text-sm font-medium text-blue-700 hover:underline hover:text-blue-900 transition"
     >
-      <UIcon name="heroicons:arrow-left-20-solid" class="mr-2 text-blue-500 w-5 h-5" />
+      <Icon name="heroicons:arrow-left-20-solid" class="mr-2 text-blue-500 w-5 h-5" />
       Back to posts
     </button>
 
-    <div v-if="!post" class="text-gray-500 text-center py-10 flex flex-col items-center">
-      <UIcon name="heroicons:clock-20-solid" class="w-6 h-6 mb-2 text-gray-400" />
-      Loading post...
+    <div v-if="!post" class="text-gray-500 text-center pt-10 flex flex-col items-center">
+      <Icon name="heroicons:clock-20-solid" class="w-6 h-6 mb-2 text-gray-400" />
+      No post...
     </div>
+     <button
+     v-if="!post"
+      @click="router.back()"
+      class="cursor-pointer mb-2 inline-flex items-center justify-center w-full text-sm font-medium text-blue-700 hover:underline hover:text-blue-900 transition"
+    >
 
-    <div v-else>
+      Back to posts
+    </button>
+
+    <div v-if="post">
       <h1 class="text-3xl font-bold text-blue-900 mb-4">{{ post.title }}</h1>
 
       <div class="border-l-4 border-blue-300 bg-white p-4 rounded text-gray-700 text-lg leading-relaxed">

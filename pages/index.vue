@@ -63,21 +63,34 @@
     <div class="text-center my-6 text-gray-500" v-if="!hasMore && !isLoading">
       No more posts to load.
     </div>
+    <div ref="bottomRef" class="h-8"></div>
+
   </div>
 </template>
 
 <script setup lang="ts">
-import { usePostFeed } from "@/composables/usePostFeed";
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import { usePostFeed } from '@/composables/usePostFeed'
 
-const router = useRouter();
-const search = ref("");
+const search = ref('')
+const {
+  posts,
+  isLoading,
+  error,
+  hasMore,
+  fetchPosts,
+  formatDate,
+  goToPost,
+  setupScroll,
+  cleanupScroll,
+  bottomRef,
+} = usePostFeed()
 
-const { posts, fetchPosts, scrollPosition, isLoading, error, hasMore } = usePostFeed();
 interface Post {
-  id: number;
-  title: string;
-  description: string;
-  created_at: string;
+  id: number
+  title: string
+  description: string
+  created_at: string
 }
 
 const filteredPosts = computed(() =>
@@ -86,36 +99,8 @@ const filteredPosts = computed(() =>
       text.toLowerCase().includes(search.value.toLowerCase())
     )
   )
-);
+)
 
-const handleScroll = () => {
-  scrollPosition.value = window.scrollY;
-  const nearBottom =
-    window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
-  if (nearBottom) fetchPosts();
-};
-
-onMounted(async () => {
-  if (posts.value.length === 0) await fetchPosts();
-  nextTick(() => {
-    window.scrollTo(0, scrollPosition.value);
-  });
-  window.addEventListener("scroll", handleScroll);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
-
-const goToPost = (id: number) => {
-  router.push(`/posts/${id}`);
-};
-const formatDate = (dateStr: string) => {
-  const date = new Date(dateStr);
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
+onMounted(setupScroll)
+onBeforeUnmount(cleanupScroll)
 </script>

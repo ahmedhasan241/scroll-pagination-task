@@ -31,14 +31,8 @@ Error and loading state management
 
 ### Scroll detection is handled using a simple logic inside a handleScroll function added to the window scroll event:
 
-const handleScroll = () => {
-  scrollPosition.value = window.scrollY;
-  const nearBottom =
-    window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
-  if (nearBottom) fetchPosts();
-};
 
-This function:
+The function handleScroll:
 
 Saves the current scroll position to the store.
 
@@ -47,15 +41,6 @@ Checks if the user is near the bottom of the page (100px threshold).
 If so, it calls fetchPosts() to load the next page of data from the API.
 
 
-### The scroll position is restored when the user navigates back to the page using: 
-
-onMounted(async () => {
-  if (posts.value.length === 0) await fetchPosts();
-  nextTick(() => {
-    window.scrollTo(0, scrollPosition.value);
-  });
-  window.addEventListener("scroll", handleScroll);
-});
 
 
 ###  Bonus Features Implemented
@@ -68,3 +53,4 @@ onMounted(async () => {
 -  Enhanced UI/UX: Icons using @nuxt/icon and Tailwind transitions and gradient backgrounds and Tooltip with full post description on hover
 
 
+### to go to the details page for each card click on the title of the card on the list page 
